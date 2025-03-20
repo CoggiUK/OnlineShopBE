@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopBE.Models;
 using OnlineShopBE.Services;
 
@@ -19,5 +20,12 @@ namespace OnlineShopBE.Controllers
         }
 
         // 1. Lấy danh sách sản phẩm trong đơn hàng	
+        [Authorize]
+        [HttpGet("/{orderId}")]
+        public IActionResult GetOrderDetails(int orderId)
+        {
+            var orderDetails = _context.OrderDetails.Where(s => s.Id == orderId);
+            return Ok(orderDetails);
+        }
     }
 }
