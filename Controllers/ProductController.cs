@@ -7,7 +7,7 @@ using OnlineShopBE.Services;
 
 namespace OnlineShopBE.Controllers
 {
-    [Route("api/product")]
+    [Route("api/products")]
     [ApiController]
 
     public class ProductController : Controller
@@ -21,7 +21,7 @@ namespace OnlineShopBE.Controllers
             _jwtService = jwtService;
         }
         // 1. Lấy danh sách sản phẩm
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
             var listProduct = _context.Products.Include(s => s.Store).Select( s => new ResponeProductModel{
