@@ -54,5 +54,20 @@ namespace OnlineShopBE.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public int GetCustomerIdFromToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
+
+            if (jwtToken == null)
+                throw new SecurityTokenException("Invalid token");
+
+            var customerIdClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+
+            if (customerIdClaim == null)
+                throw new SecurityTokenException("CustomerId claim not found");
+
+            return int.Parse(customerIdClaim.Value);
+        }
     }
 }
